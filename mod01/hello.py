@@ -1,7 +1,7 @@
 from datetime import datetime
 
 current_time = datetime.now()
-name = input("What is your name? ")
+name = "Tony Risto"
 
 
 def greeting():
