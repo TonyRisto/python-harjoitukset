@@ -2,6 +2,9 @@
 
 **Tony Risto**
 
-## Moduuli 1
+## Moduuli 1-2
 
 Tehtävät 1 ja 2 tehty.
+
+## Moduuli 3
+Tehtävät 1, 2, 3, 4, 5 ja 6 tehty.
