@@ -17,3 +17,6 @@ Tehtävät 1, 2, 3, 4, 5 ja 6 tehty.
 
 ## Moduuli 6
 Tehtävät 1, 2, 3 ja 4 tehty.
+
+## Moduuli 7
+Tehtävät 1, 2, 3, 4, 5 ja 6 teht.y
