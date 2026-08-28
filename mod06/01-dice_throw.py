@@ -13,4 +13,3 @@ for i in range(dices_count):
 
 print(f"Noppien silmäluvut: {dices}")
 print(f"Noppien silmälukujen summa: {dices_sum}")
-#print(f"Noppien silmälukujen summa: {sum(dices)}")
