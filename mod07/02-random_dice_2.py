@@ -7,7 +7,6 @@ def throw_dice(sides):
     return dice
 
 dice = throw_dice(sides)
-print(dice)
 
 while dice != sides:
     dice = throw_dice(sides)
