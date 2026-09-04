@@ -3,8 +3,7 @@ import random
 sides = int(input("Anna nopan tahkojen yhteismäärä: "))
 
 def throw_dice(sides):
-    dice_sides = sides
-    dice = random.randint(1, dice_sides)
+    dice = random.randint(1, sides)
     return dice
 
 dice = throw_dice(sides)
