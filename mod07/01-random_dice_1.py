@@ -5,7 +5,6 @@ def throw_dice():
     return dice
 
 dice = throw_dice()
-print(dice)
 
 while dice != 6:
     dice = throw_dice()
