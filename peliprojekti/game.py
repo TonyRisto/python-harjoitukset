@@ -1,5 +1,6 @@
 name = input("Mikä on nimesi? ")
 age = int(input("Mikä on ikäsi? "))
+item_list = []
 
 if age < 12:
     print(f"Kokeile {12 - age} vuoden päästä uudestaan :)")
@@ -7,21 +8,39 @@ if age < 12:
 
 print(f"Hei, {age}-vuotias {name}!\nTervetuloa pelaamaan!")
 
+def main_menu():
+    return int(input("1. Pelaa\n2. Ohjeet\n3. Lopeta\n"))
 
-while True:
-    command = int(input("Valitse seuraavista komennoista:\n1. Aloita peli\n2. Ohjeet\n3. Tulostaulu\n4. Lopeta\n"))
-    state = command
-    while state != 4:
-        if state == 1:
-            state = input("Paina x näppäintä\n")
-        if state == 2:
-            state = input("Paina y näppäintä\n")
-        if state == 3:
-            state = input("Paina a näppäintä\n")
-        if state == "x" or state == "y" or state == "a":
-            command = int(input("Päävalikko: 1. Aloita peli, 2. Ohjeet, 3. Tulostaulu, 4. Lopeta\n"))
-            state = command
+def play():
+    print("Pelataan!")
+
+def add_items(item1, item2, item3):
+    item_list.append(item1)
+    item_list.append(item2)
+    item_list.append(item3)
+
+def show_list(item_list):
+    for i in range(len(item_list)):
+        while i > -1:
+            print(f"Repussasi on: {item_list[i]}")
+            i -= 1
+
+def instructions():
+    print("Opettele pelaan")
+
+def main():
+    command = None
+    while command != 0:
+        command = main_menu()
+
+        if command == 1:
+            play()
+        elif command == 2:
+            instructions()
+        elif command == 3:
+            print("Hei hei!")
+            quit()
         else:
-            print("Väärä näppäin, aloita alusta.")
-            break
-        
+            print("Tuntematon valinta.")
+
+main()
