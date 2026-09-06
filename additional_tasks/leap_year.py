@@ -9,7 +9,7 @@ sum1 = fourths + hundreds + fourth_hundreds
 isLeapYear = None
 
 if sum1 == int(sum1):
-    print(f"{year} on karkausvuosi.") ## Tsekkaa onko vuosisatojen mukaan karkausvuosi.
+    print(f"{year} on karkausvuosi.")
     isLeapYear = True
 if (fourths == int(fourths)) and (hundreds != int(hundreds) and (fourth_hundreds != int)):
     print(f"{year} on karkausvuosi.")
