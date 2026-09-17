@@ -22,4 +22,10 @@ Tehtävät 1, 2, 3 ja 4 tehty.
 Tehtävät 1, 2, 3, 4, 5 ja 6 tehty.
 
 ## Moduuli 8
-Tehtävät 1, 2, 3, 4, 5 ja 6 teht.y
+Tehtävät 1, 2, 3, 4, 5 ja 6 tehty.
+
+## Moduuli 9
+Tehtävä 1 tehty.
+
+## Moduuli 10
+Tehtävät 1 ja 2 tehty.
