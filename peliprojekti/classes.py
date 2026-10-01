@@ -46,17 +46,16 @@ class GameState:
         self.resources = Resources()
         self.sustainability = Sustainability()
         self.buildings = {
-            "house": 10,
-            "farm": 3,
-            "waterTower": 1,
-            "school": 1,
-            "peatPlant": 1
+            "talo": 10,
+            "maatila": 3,
+            "vesitorni": 1,
+            "koulu": 1,
+            "hakevoimalaitos": 1
         }
 
     def advanceYear(self):
         self.resources.money += self.resources.getIncome() - self.getTotal("upkeep")
-        self.resources.food += self.getTotal("food") - self.resources.getFoodConsumption()
-        self.resources.population += self.updatePopulation()
+        self.resources.food += self.getTotal("foodProduction") - self.resources.getFoodConsumption()
         energyBalance = self.getTotal("energyProduction") - self.resources.getEnergyConsumption()
         self.sustainability.renewableShare = self.getRenewableShare()
 
@@ -68,7 +67,8 @@ class GameState:
             for key, value in BUILDINGS[name].items():
                 if key in ("cleanWater", "education", "equality", "environment", "happiness"):
                     self.sustainability.change(key, value * count)
-
+        
+        self.updatePopulation()
         self.year += 1
 
     def getTotal(self, key):
@@ -108,11 +108,37 @@ class GameState:
     def build(self, name):
         if name not in BUILDINGS:
             return f"{name} ei ole olemassa, kokeile uudestaan."
-        elif name in self.buildings.items():
-            self.buildings[name] += 1
+        
+        cost = BUILDINGS[name]["cost"]
 
+        if self.resources.money < cost:
+            return f"Ei tarpeeksi rahaa, tarvitset {cost - self.resources.money}"
+        
+        self.buildings[name] = self.buildings.get(name, 0) + 1
+        self.resources.money -= cost
+        return f"Ostit rakennuksen {name}"
 
+    def getStatus(self):
+        lines = []
+        lines.append(f"Vuosi: {self.year}\n-------------------")
+        lines.append(f"Resurssit")
+        lines.append(f"Asukkaat: {self.resources.population}")
+        lines.append(f"Raha: {self.resources.money} €")
+        lines.append(f"Ruoka: {self.resources.food}")
+        lines.append(f"Kestävyystavoitteet\n-------------------")
+        lines.append(f"Puhdas vesi: {self.sustainability.cleanWater}%")
+        lines.append(f"Uusiutuva energia: {self.sustainability.renewableShare}%")
+        lines.append(f"Koulutus: {self.sustainability.education}%")
+        lines.append(f"Tasa-arvo: {self.sustainability.equality}%")
+        lines.append(f"Ympäristö: {self.sustainability.environment}%")
+        lines.append(f"Onnellisuus: {self.sustainability.happiness}%")
+        lines.append(f"-------------------\nRakennukset")
+        for name, count in self.buildings.items():
+            lines.append(f"{name}: ({count} kpl)")
+        return "\n".join(lines)
 
-game = GameState()
-print(game.getTotal("housing"))
-print(game.resources.population)
+    def getBuildingsList(self):
+        buildings = []
+        for name in BUILDINGS:
+            buildings.append(f"{name}: hinta {BUILDINGS[name]["cost"]} €")
+        return "\n".join(buildings)
