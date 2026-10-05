@@ -1,6 +1,8 @@
 from setup_functions import getName, getAge, evaluateAge, mainMenu, runGame
 from classes import GameState
-from texts import instructions
+
+with open("instructions.txt", "r") as instruction:
+    instructions = instruction.read()
 
 name = getName()
 isOldEnough, age = evaluateAge(getAge())

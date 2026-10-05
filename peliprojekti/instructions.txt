@@ -1,0 +1,1 @@
+Pelaat peliä antamalla vastauksia terminaalissa näkyviin kysymyksiin. Jokainen vastauksesi vaikuttaa pelin lopputulokseen, joten kannattaa miettiä miten vastaat.
