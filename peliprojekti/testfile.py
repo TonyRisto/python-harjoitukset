@@ -1,13 +1,8 @@
-buildings = {
-    "house": 10,
-    "farm": 3,
-    "waterTower": 1,
-    "school": 1,
-    "peatPlant": 1
-}
+class Resources:
+    def __init__(self):
+        self.population = 100
+        self.money = 500000
+        self.food = 500
 
-print(buildings)
-
-buildings["house"] += 1
-
-print(buildings)
+r = Resources()
+print(r.population)

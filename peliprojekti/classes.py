@@ -41,7 +41,8 @@ class Sustainability:
         setattr(self, name, max(0, min(100, value)))
 
 class GameState:
-    def __init__(self):
+    def __init__(self, player = None):
+        self.player = player
         self.year = 1
         self.resources = Resources()
         self.sustainability = Sustainability()
