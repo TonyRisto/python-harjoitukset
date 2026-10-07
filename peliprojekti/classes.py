@@ -1,5 +1,6 @@
 from texts import (
     BUILDINGS,
+    DECAY,
     ENERGY_PER_CAPITA,
     FOOD_PER_CAPITA,
     INCOME_PER_CAPITA,
@@ -70,9 +71,16 @@ class GameState:
         energyBalance = self.getTotal("energyProduction") - self.resources.getEnergyConsumption()
         self.sustainability.renewableShare = self.getRenewableShare()
 
+        # Vuosittainen vähennys
+
+        for key, value in DECAY.items():
+            self.sustainability.change(key, value)
+
         if energyBalance < 0:
             self.sustainability.change("happiness", -5)
             self.sustainability.change("equality", -2)
+
+        # Rakennusten vaikutus
 
         for name, count in self.buildings.items():
             for key, value in BUILDINGS[name].items():
@@ -93,6 +101,10 @@ class GameState:
             return "Kyläsi autioitui. Hävisit pelin"
         if self.resources.population >= 250 and all(g > 70 for g in goals):
             return f"Onnittelut! Rakensit kestävän kaupungin vuodessa {self.year}."
+        if s.renewableShare >= 90 and s.environment >= 90:
+            return "Ekologinen voitto: kylästäsi tuli vihreän energian edelläkävijä!"
+        if self.resources.money >= 1000000:
+            return "Taloudellinen voitto: kylästäsi tuli rikas, mutta onko se kestävä?"
         if self.year >= 10:
             return "Aika loppui, et saavuttanut tavoitteitasi."
         return None
@@ -153,21 +165,26 @@ class GameState:
         self.resources.money -= cost
         return f"Rakensit rakennuksen {name}"
 
+# Palauttaa tämän hetkisen tilanteen (resurssit ja kestävyystavoitteet)
+
     def getStatus(self):
-        lines = []
-        lines.append(f"\nVuosi: {self.year}\n-------------------")
-        lines.append(f"Resurssit")
-        lines.append(f"Asukkaat: {self.resources.population}")
-        lines.append(f"Raha: {self.resources.money} €")
-        lines.append(f"Ruoka: {self.resources.food}")
-        lines.append(f"-------------------\nKestävyystavoitteet")
-        lines.append(f"Puhdas vesi: {self.sustainability.cleanWater}%")
-        lines.append(f"Uusiutuva energia: {self.sustainability.renewableShare}%")
-        lines.append(f"Koulutus: {self.sustainability.education}%")
-        lines.append(f"Tasa-arvo: {self.sustainability.equality}%")
-        lines.append(f"Ympäristö: {self.sustainability.environment}%")
-        lines.append(f"Onnellisuus: {self.sustainability.happiness}%")
-        return "\n".join(lines)
+        r, s = self.resources, self.sustainability
+        return (
+            f"\nVuosi: {self.year}\n"
+            f"-------------------\n"
+            f"Resurssit\n"
+            f"Asukkaat: {r.population}\n"
+            f"Raha: {r.money} €\n"
+            f"Ruoka: {r.food}\n"
+            f"-------------------\n"
+            f"Kestävyystavoitteet\n"
+            f"Puhdas vesi: {s.cleanWater}%\n"
+            f"Uusiutuva energia: {s.renewableShare}%\n"
+            f"Koulutus: {s.education}%\n"
+            f"Tasa-arvo: {s.equality}%\n"
+            f"Ympäristö: {s.environment}%\n"
+            f"Onnellisuus: {s.happiness}%"
+        )
 
     def getBuildings(self):
         lines = []
@@ -249,5 +266,28 @@ class GameState:
         return "\n".join(lines)
 
     def getBuildingsList(self):
+        lines = ["Tässä lista rakennuksista joita voit rakentaa"]
         for building in BUILDINGS:
-            print(building)
+            b = BUILDINGS[building]
+            lines.append(f"\n{building.upper()}")
+            lines.append(f"Hinta: {b["cost"]} €")
+            lines.append(f"Ylläpito: {b["upkeep"]} €/v")
+            if b["housing"] != 0:
+                lines.append(f"Asuntoja: {b["housing"]}")
+            if b["foodProduction"] != 0:
+                lines.append(f"Ruoka: {b["foodProduction"]}")
+            if b["cleanWater"] != 0:
+                lines.append(f"Puhdas vesi: {b["cleanWater"]}")
+            if b["education"] != 0:
+                lines.append(f"Koulutus: {b["education"]}")
+            if b["energyProduction"] != 0:
+                lines.append(f"Energiaa: {b["energyProduction"]}")
+            if b["environment"] != 0:
+                lines.append(f"Ympäristö: {b["environment"]}")
+            if b["happiness"] != 0:
+                lines.append(f"Onnellisuus: {b["happiness"]}")
+            if b["equality"] != 0:
+                lines.append(f"Tasa-arvo: {b["equality"]}")
+            if b["renewable"]:
+                lines.append("Uusiutuva")
+        return "\n".join(lines)

@@ -72,9 +72,10 @@ def runGame(game):
         if command == "rakennukset":
             userInput = input(f"\nRakennuksesi\n{game.getBuildings()}\nValitse seuraavista:\n\nrakenna\npalaa\n")
             if userInput == "rakenna":
+                print(game.getBuildingsList())
                 building = True
                 while building:
-                    buildingInput = input("Anna rakennuksen nimi, jonka haluat rakentaa (kirjoita palaa, kun haluat takaisin)\n")
+                    buildingInput = input("Anna rakennuksen nimi, jonka haluat rakentaa (kirjoita palaa, kun haluat takaisin)\n").lower()
                     if buildingInput == "palaa":
                         building = False
                         continue
@@ -92,7 +93,10 @@ def runGame(game):
             if result:
                 input(f"{result} (paina enter jatkaaksesi)")
                 running = False
-                os.remove("save.json")
+                try:
+                    os.remove("save.json")
+                except FileNotFoundError:
+                    pass
             print(game.getStatus())
         elif command == "tallenna":
             saveGame(game)
