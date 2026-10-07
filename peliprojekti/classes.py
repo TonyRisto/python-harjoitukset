@@ -10,6 +10,10 @@ from texts import (
     HAPPINESS_DECLINE_MIN
 )
 
+# Resurssit luokka pitää kirjaa tämänhetkisestä väkiluvusta, rahan ja ruoan määrästä.
+# Se sisältää myös metodit joilla saadaan energian ja ruoan kulutus sekä tulot.
+# Ylläolevat riippuvat väkiluvun määrästä.
+
 class Resources:
     def __init__(self):
         self.population = 100
@@ -26,6 +30,8 @@ class Resources:
         return self.population * INCOME_PER_CAPITA
 
 
+# Kestävyys luokka pitää kirjaa kestävyystavoitteista prosentteina.
+# Lukuja muuttaa change metodi, joka varmistaa ettei luku mene alle 0:n tai yli 100:n
 
 class Sustainability:
     def __init__(self):
@@ -40,6 +46,8 @@ class Sustainability:
         value = getattr(self, name) + amount
         setattr(self, name, max(0, min(100, value)))
 
+# Pelin tila luokka huolehtii pelin pyörittämisestä ja rakennuksien määrästä sekä resurssi- ja kestävyysolioiden muutoksista.
+
 class GameState:
     def __init__(self, player = None):
         self.player = player
@@ -53,6 +61,8 @@ class GameState:
             "koulu": 1,
             "hakevoimalaitos": 1
         }
+
+# Pyörittää peliä yhden vuoden eteenpäin, päivittää resurssit ja kestävyysprosentit
 
     def advanceYear(self):
         self.resources.money += self.resources.getIncome() - self.getTotal("upkeep")
@@ -72,11 +82,30 @@ class GameState:
         self.updatePopulation()
         self.year += 1
 
+# Tekee tarkistuksen onko peli voitettu tai hävitty
+
+    def checkEndGame(self):
+        s = self.sustainability
+        goals = [s.cleanWater, s.education, s.environment, s.equality, s.happiness, s.renewableShare]
+        if self.resources.money <= 0:
+            return "Kyläsi meni konkurssiin. Hävisit pelin"
+        if self.resources.population <= 0:
+            return "Kyläsi autioitui. Hävisit pelin"
+        if self.resources.population >= 250 and all(g > 70 for g in goals):
+            return f"Onnittelut! Rakensit kestävän kaupungin vuodessa {self.year}."
+        if self.year >= 10:
+            return "Aika loppui, et saavuttanut tavoitteitasi."
+        return None
+
+# Hakee avaimen mukaan kokonaiskulutuksen, esim. ylläpidon kustannukset yhteensä.
+
     def getTotal(self, key):
         total = 0
         for name, count in self.buildings.items():
             total += BUILDINGS[name].get(key, 0) * count
         return total
+
+# Hakee uusiutuvan energian tuotannon määrän suhteessa energian tuotantoon.
 
     def getRenewableShare(self):
         production = self.getTotal("energyProduction")
@@ -87,6 +116,8 @@ class GameState:
             if BUILDINGS[name].get("renewable"):
                 renewable += BUILDINGS[name].get("energyProduction", 0) * count
         return renewable * 100 // production
+
+# Kasvattaa tai vähentää asukaslukua, riippuen vapaista asuinpaikoista, onnellisuudesta ja ruoan määrästä.
 
     def updatePopulation(self):
         housingCapacity = self.getTotal("housing")
@@ -106,6 +137,9 @@ class GameState:
             newPopulation = self.resources.population - decline
             self.resources.population = max(0, newPopulation)
 
+# Rakennusmetodi jolla pelaaja voi rakentaa uuden rakennuksen jos se on olemassa ja on tarpeeksi rahaa
+# (tarkistaa onko annettu rakennus BUILDINGS sanakirjassa)
+
     def build(self, name):
         if name not in BUILDINGS:
             return f"{name} ei ole olemassa, kokeile uudestaan."
@@ -117,29 +151,103 @@ class GameState:
         
         self.buildings[name] = self.buildings.get(name, 0) + 1
         self.resources.money -= cost
-        return f"Ostit rakennuksen {name}"
+        return f"Rakensit rakennuksen {name}"
 
     def getStatus(self):
         lines = []
-        lines.append(f"Vuosi: {self.year}\n-------------------")
+        lines.append(f"\nVuosi: {self.year}\n-------------------")
         lines.append(f"Resurssit")
         lines.append(f"Asukkaat: {self.resources.population}")
         lines.append(f"Raha: {self.resources.money} €")
         lines.append(f"Ruoka: {self.resources.food}")
-        lines.append(f"Kestävyystavoitteet\n-------------------")
+        lines.append(f"-------------------\nKestävyystavoitteet")
         lines.append(f"Puhdas vesi: {self.sustainability.cleanWater}%")
         lines.append(f"Uusiutuva energia: {self.sustainability.renewableShare}%")
         lines.append(f"Koulutus: {self.sustainability.education}%")
         lines.append(f"Tasa-arvo: {self.sustainability.equality}%")
         lines.append(f"Ympäristö: {self.sustainability.environment}%")
         lines.append(f"Onnellisuus: {self.sustainability.happiness}%")
-        lines.append(f"-------------------\nRakennukset")
+        return "\n".join(lines)
+
+    def getBuildings(self):
+        lines = []
         for name, count in self.buildings.items():
-            lines.append(f"{name}: ({count} kpl)")
+            lines.append((f"{30 * "-"}\n{name.capitalize()}"
+                          f"\nAsukaspaikkojen määrä yht: {BUILDINGS[name].get("housing", 0) * count}\n"
+                          f"Ylläpidon kustannus yht: -{BUILDINGS[name].get("upkeep", 0) * count} €\n"
+                          f"Ruoan tuotanto yht: {BUILDINGS[name].get("foodProduction", 0) * count}\n"
+                          f"Veden tuotanto yht: {BUILDINGS[name].get("cleanWater", 0) * count}\n"
+                          f"Energian tuotanto yht: {BUILDINGS[name].get("energyProduction", 0) * count}\n"
+                          f"Uusiutuva: {BUILDINGS[name].get("renewable", False)}\n"
+                          f"Koulutus yht: {BUILDINGS[name].get("education", 0) * count}\n"
+                          f"Onnellisuus yht: {BUILDINGS[name].get("happiness", 0) * count}\n"
+                          f"Tasa-arvo yht: {BUILDINGS[name].get("equality", 0) * count}\n"
+                          f"Ympäristön vaikutus: {BUILDINGS[name].get("environment", 0) * count}\n"
+                          ))
+        return "\n".join(lines)
+
+    def getConsumption(self):
+        lines = []
+        lines.append(f"\nMuu kulutus\n-------------------")
+        lines.append(f"Energian kulutus: {self.resources.getEnergyConsumption()}/vuosi")
+        lines.append(f"Ruoan kulutus: {self.resources.getFoodConsumption()}/vuosi")
+        lines.append("\n")
+        return "\n".join(lines)
+
+    def getSpending(self):
+        lines = []
+        totals = {
+            "totalUpkeep": 0,
+            "totalFoodProduction": 0,
+            "totalEnvironmentImpact": 0,
+            "totalCleanWater": 0,
+            "totalEducation": 0,
+            "totalEnergyProduction": 0,
+            "totalEquality": 0,
+            "totalHappiness": 0
+        }
+        lines.append(f"\nRakennuksien kulutus/tuotto\n-------------------")
+        for building, count in self.buildings.items():
+            if building in BUILDINGS:
+                totalUpkeep = BUILDINGS[building].get("upkeep", 0) * count
+                totals["totalUpkeep"] += totalUpkeep
+                totalFoodProduction = BUILDINGS[building].get("foodProduction", 0) * count
+                totals["totalFoodProduction"] += totalFoodProduction
+                totalEnvironmentImpact = BUILDINGS[building].get("environment", 0) * count
+                totals["totalEnvironmentImpact"] += totalEnvironmentImpact
+                totalCleanWater = BUILDINGS[building].get("cleanWater", 0) * count
+                totals["totalCleanWater"] += totalCleanWater
+                totalEducation = BUILDINGS[building].get("education", 0) * count
+                totals["totalEducation"] += totalEducation
+                totalEnergyProduction = BUILDINGS[building].get("energyProduction", 0) * count
+                totals["totalEnergyProduction"] += totalEnergyProduction
+                totalEquality = BUILDINGS[building].get("equality", 0) * count
+                totals["totalEquality"] += totalEquality
+                totalHappiness = BUILDINGS[building].get("happiness", 0) * count
+                totals["totalHappiness"] += totalHappiness
+                lines.append((
+                    f"\n{building.upper()} ({count} kpl)\n\nKustannus: -{totalUpkeep} €/vuosi"
+                    f"\nRuoan tuotanto: {totalFoodProduction}/vuosi"
+                    f"\nYmpäristö: {totalEnvironmentImpact}/vuosi"
+                    f"\nPuhdas vesi: {totalCleanWater}/vuosi"
+                    f"\nKoulutus: {totalEducation}/vuosi"
+                    f"\nEnergian tuotanto: {totalEnergyProduction}/vuosi"
+                    f"\nTasa-arvo: {totalEquality}/vuosi"
+                    f"\nOnnellisuus: {totalHappiness}/vuosi\n"
+                    ))
+        lines.append(f"\nKokonaistilanne rakennuksilla\n-------------------")
+        lines.append((
+            f"Ylläpito: -{totals["totalUpkeep"]} €/vuosi\n"
+            f"Ruoan tuotanto: {totals["totalFoodProduction"]}/vuosi\n"
+            f"Ympäristö: {totals["totalEnvironmentImpact"]}/vuosi\n"
+            f"Puhdas vesi: {totals["totalCleanWater"]}/vuosi\n"
+            f"Koulutus: {totals["totalEducation"]}/vuosi\n"
+            f"Energian tuotanto: {totals["totalEnergyProduction"]}/vuosi\n"
+            f"Tasa-arvo: {totals["totalEquality"]}/vuosi\n"
+            f"Onnellisuus: {totals["totalHappiness"]}/vuosi\n"
+            ))
         return "\n".join(lines)
 
     def getBuildingsList(self):
-        buildings = []
-        for name in BUILDINGS:
-            buildings.append(f"{name}: hinta {BUILDINGS[name]["cost"]} €")
-        return "\n".join(buildings)
+        for building in BUILDINGS:
+            print(building)

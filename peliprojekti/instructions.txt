@@ -1,1 +1,36 @@
-Pelaat peliä antamalla vastauksia terminaalissa näkyviin kysymyksiin. Jokainen vastauksesi vaikuttaa pelin lopputulokseen, joten kannattaa miettiä miten vastaat.
+TAVOITE
+Johdat kylää ja yrität kasvattaa sen väkilukua ja saavuttaa
+kestävyystavoitteet. Kylä kasvaa, kun asukkaat
+ovat onnellisia, ruokaa riittää ja energiaa on tarpeeksi.
+
+KOMENNOT
+rakenna   - rakenna uusi rakennus (kirjoittamalla rakennuksen nimi)
+tilanne   - näytä rakennukset, resurssit ja kestävyystavoitteet
+seuraava  - siirry pelissä vuosi eteenpäin
+tallenna  - tallentaa pelin
+paavalikko    - palaa päävalikkoon (edistyminen katoaa, jos ei ole tallennusta tehty!)
+
+RESURSSIT
+Asukkaat  - kasvavat, kun asuntoja on tarpeeksi, he ovat
+            onnellisia ja heillä on tarpeeksi ruokaa
+Raha      - saat tuloja asukkaista joka vuosi, mutta rakennukset
+            kustantavat vuosittain tietyn verran
+Ruoka     - maatilat tuottavat ruokaa, mutta ruoka vähenee joka
+            vuosi asukasluvun mukaan
+
+KESTÄVYYSTAVOITTEET (0-100 %)
+Puhdas vesi, uusiutuva energia, koulutus, tasa-arvo, ympäristö
+ja onnellisuus. Rakennukset parantavat tai heikentävät niitä
+joka vuosi.
+
+VINKIT
+- Pidä silmällä, että asuntoja (talot) on enemmän kuin asukkaita,
+  muuten väkiluku ei kasva.
+- Jos ruoka loppuu, väkiluku alkaa laskea. Rakenna maatiloja ajoissa.
+- Jos energiaa ei riitä, onnellisuus ja tasa-arvo laskevat.
+- Jos onnellisuus laskee liian alas, asukkaat muuttavat pois.
+- Uusiutuva energia parantaa ympäristöä ja kestävyyttä pitkällä
+  aikavälillä.
+- Älä käytä kaikkea rahaa kerralla, ylläpitokulut vähentävät rahaa
+  joka vuosi.
+- Tarkista tilanne ennen jokaista vuotta ja tallenna välillä.

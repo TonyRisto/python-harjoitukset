@@ -1,6 +1,7 @@
 import json
 from classes import GameState
 from texts import commands
+import os
 
 def getName():
     return input("Mikä on nimesi?\n").capitalize()
@@ -63,20 +64,40 @@ def newGame(name):
     runGame(game)
 
 def runGame(game):
+    print(game.getStatus())
+    input("\nPaina enter jatkaaksesi")
     running = True
     while running:
-        command = input(f"Valitse seuraavista toiminnoista:\n{commands}\n")
-        if command == "rakenna":
-            userInput = input(f"Valitse seuraavista rakennuksista:\n{game.getBuildingsList()}")
-            input(f"{game.build(userInput)}\n paina enter jatkaaksesi")
+        command = input(f"\nValitse seuraavista toiminnoista:\n{commands}\n")
+        if command == "rakennukset":
+            userInput = input(f"\nRakennuksesi\n{game.getBuildings()}\nValitse seuraavista:\n\nrakenna\npalaa\n")
+            if userInput == "rakenna":
+                building = True
+                while building:
+                    buildingInput = input("Anna rakennuksen nimi, jonka haluat rakentaa (kirjoita palaa, kun haluat takaisin)\n")
+                    if buildingInput == "palaa":
+                        building = False
+                        continue
+                    print(f"{game.build(buildingInput)}")
+            elif userInput == "palaa":
+                building = False
+                continue
+        elif command == "kulutus":
+            input(f"{game.getSpending()}\n{game.getConsumption()}\n(paina enter jatkaaksesi)")
         elif command == "tilanne":
-            input(f"Tilanne\n{game.getStatus()}\n paina enter jatkaaksesi")
+            input(f"Tilanne\n{game.getStatus()}\n(paina enter jatkaaksesi)")
         elif command == "seuraava":
             game.advanceYear()
+            result = game.checkEndGame()
+            if result:
+                input(f"{result} (paina enter jatkaaksesi)")
+                running = False
+                os.remove("save.json")
+            print(game.getStatus())
         elif command == "tallenna":
             saveGame(game)
-            input("Peli tallennettu. (paina enter)")
-        elif command == "lopeta":
+            input("Peli tallennettu. (paina enter jatkaaksesi)")
+        elif command == "paavalikko":
             running = False
         else:
             print("Väärä komento.")
