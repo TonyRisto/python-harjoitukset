@@ -54,10 +54,10 @@ Peli perustuu ajatukseen, että kestävä kehitys on tasapainoa ympäristön, ih
 
 Peli toteuttaa erityisesti YK:n tavoitteita:
 
+- **3 Terveys ja hyvinvointi:** puisto ja terveysasema nostavat onnellisuutta.
+- **4 Hyvä koulutus:** koulut nostavat koulutusta, mutta maksavat ylläpitoa.
 - **6 Puhdas vesi:** vesitornit pitävät veden laadun yllä.
 - **7 Puhdas energia:** pelaaja valitsee halvan hakevoimalaitoksen ja kalliimpien uusiutuvien välillä.
-- **4 Hyvä koulutus:** koulut nostavat koulutusta, mutta maksavat ylläpitoa.
-- **3 Terveys ja hyvinvointi:** puisto ja terveysasema nostavat onnellisuutta.
 - **10 Eriarvoisuuden vähentäminen:** seurakuntatalo ja terveysasema nostavat tasa-arvoa.
 
 Taloudellinen voitto on mahdollinen, mutta se ei tarkoita kestävän kehityksen mukaista voittoa.
