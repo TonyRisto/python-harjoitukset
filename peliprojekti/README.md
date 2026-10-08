@@ -10,16 +10,18 @@ Pelin ideana on kasvattaa ja kehittää kylää kestävän kehityksen periaattei
 
 Pelin tavoitteena on rakentaa kylä kestävän kehityksen tavoitteiden mukaisesti.
 
-Voittomahdollisuudet:
+#### Voittomahdollisuudet
 - Kestävä kylä voitto (vaatii 250 asukasta ja kaikki kestävyysmittarit vähintään 70 %)
 - Ekologinen voitto (vaatii uusiutuvan energian ja ympäristön mittarit vähintään 75 %)
 - Taloudellinen voitto (rahan määrä 1 100 000 €)
 
-Eri häviöt:
+#### Häviömahdollisuudets
 - Kylän konkurssi (raha menee 0€)
 - Kylän autioituminen (asukkaat menee 0)
 - Kylän ympäristön tuhoutuminen ja asukkaiden onnettomuus (ympäristö ja onnellisuus menee 0)
 - Ajan loppuminen kesken ja useita eri häviömahdollisuuksia, riippuen kestävyysmittareiden tilanteesta
+
+### Toiminnallisuudet ja toiminta
 
 #### Toiminnallisuudet
 - pelaajan nimi ja ikärajatarkastus
