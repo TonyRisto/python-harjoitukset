@@ -3,11 +3,14 @@ Johdat kylää ja yrität kasvattaa sen väkilukua ja saavuttaa
 kestävyystavoitteet. Kylä kasvaa, kun asukkaat
 ovat onnellisia, ruokaa riittää ja energiaa on tarpeeksi.
 
-KOMENNOT
-rakenna   - rakenna uusi rakennus (kirjoittamalla rakennuksen nimi)
-tilanne   - näytä rakennukset, resurssit ja kestävyystavoitteet
-seuraava  - siirry pelissä vuosi eteenpäin
-tallenna  - tallentaa pelin
+PELIN KOMENNOT
+rakennukset   - avaa listan nykyisistä rakennuksista,
+                täältä voit myös rakentaa uusia rakennuksia
+tilanne       - näytä resurssit ja kestävyystavoitteiden tilanne
+kulutus       - näyttää rakennustyypin kokonaiskulutuksen, niiden yhteisvaikutuksen
+                sekä energian- ja ruoan kulutuksen
+seuraava      - siirry pelissä vuosi eteenpäin
+tallenna      - tallentaa pelin
 paavalikko    - palaa päävalikkoon (edistyminen katoaa, jos ei ole tallennusta tehty!)
 
 RESURSSIT
@@ -23,9 +26,25 @@ Puhdas vesi, uusiutuva energia, koulutus, tasa-arvo, ympäristö
 ja onnellisuus. Rakennukset parantavat tai heikentävät niitä
 joka vuosi.
 
+VOITTAMINEN
+Peli päättyy voittoon, jos saavutat jonkin näistä:
+1. Kestävä kylä: väkiluku on vähintään 250 ja kaikki
+   kestävyystavoitteet ovat vähintään 70 %.
+2. Ekologinen voitto: uusiutuva energia ja ympäristö vähintään 75%
+3. Taloudellinen voitto: rahaa on vähintään 1 100 000 €.
+   (Mutta onko rikas kylä oikeasti kestävä?)
+
+HÄVIÄMINEN
+Peli päättyy tappioon, jos:
+- raha loppuu (konkurssi)
+- kaikki asukkaat muuttavat pois
+- 15 vuotta kuluu eikä mikään voitto toteudu
+
 VINKIT
 - Pidä silmällä, että asuntoja (talot) on enemmän kuin asukkaita,
   muuten väkiluku ei kasva.
+- Joka vuosi kestävyystavoitteet laskevat. Muista tarkkailla näitä
+  lukuja.
 - Jos ruoka loppuu, väkiluku alkaa laskea. Rakenna maatiloja ajoissa.
 - Jos energiaa ei riitä, onnellisuus ja tasa-arvo laskevat.
 - Jos onnellisuus laskee liian alas, asukkaat muuttavat pois.

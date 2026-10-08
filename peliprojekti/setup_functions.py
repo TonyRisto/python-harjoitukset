@@ -1,7 +1,8 @@
 import json
 from classes import GameState
-from texts import commands
+from data import commands
 import os
+
 
 def getName():
     return input("Mikä on nimesi?\n").capitalize()
@@ -20,6 +21,8 @@ def evaluateAge(age):
     else:
         return False, age
 
+# Päävalikko tarvitsee käyttäjältä syötteen numerona ja palauttaa sen. (tarkistaa myös onko syöte oikein)
+
 def mainMenu():
     while True:
         try:
@@ -32,8 +35,11 @@ def mainMenu():
         except ValueError:
             print("\nValinnan pitää olla luku 1-4 väliltä\n")
 
+# Tallentaa käyttäjän pelin tilanteen, ottaen game oliosta tarvittavat tiedot (tallentaa JSON tiedostona, yksi tallennus voi olla kerrallaan).
+
 def saveGame(game):
     saveData = {
+        "year": game.year,
         "player": game.player,
         "buildings": game.buildings,
         "resources": vars(game.resources),
@@ -42,13 +48,15 @@ def saveGame(game):
     with open("save.json", "w") as file:
         json.dump(saveData, file, indent=2)
 
+# Lataa tallennuksen, luo GameState olion ja asettaa tallennuksessa olevat tiedot GameStateen (eli ns. jatketaan mihin on jääty).
+
 def loadGame():
     try:
         with open("save.json", "r") as file:
             saveData = json.load(file)
     except FileNotFoundError:
         input("Ei tallennettua peliä. (jatka painamalla enter)")
-        return mainMenu()
+        return
 
     game = GameState(saveData["player"])
     game.year = saveData.get("year", 1)
@@ -63,6 +71,8 @@ def newGame(name):
     game = GameState(name)
     runGame(game)
 
+# Pelin pyörittämisfunktio. Tämä pyörittää koko peliä.
+
 def runGame(game):
     print(game.getStatus())
     input("\nPaina enter jatkaaksesi")
@@ -70,21 +80,25 @@ def runGame(game):
     while running:
         command = input(f"\nValitse seuraavista toiminnoista:\n{commands}\n")
         if command == "rakennukset":
-            userInput = input(f"\nRakennuksesi\n{game.getBuildings()}\nValitse seuraavista:\n\nrakenna\npalaa\n")
-            if userInput == "rakenna":
-                print(game.getBuildingsList())
-                building = True
-                while building:
-                    buildingInput = input("Anna rakennuksen nimi, jonka haluat rakentaa (kirjoita palaa, kun haluat takaisin)\n").lower()
-                    if buildingInput == "palaa":
-                        building = False
-                        continue
-                    print(f"{game.build(buildingInput)}")
-            elif userInput == "palaa":
-                building = False
-                continue
+            print(f"\nRAKENNUKSESI\n{game.getBuildings()}")
+            menu = True
+            while menu:
+                userInput = input(f"\nValitse seuraavista:\n\nrakenna\npalaa\n").lower()
+                if userInput == "rakenna":
+                    print(game.getBuildingsList())
+                    building = True
+                    while building:
+                        buildingInput = input("Anna rakennuksen nimi, jonka haluat rakentaa (kirjoita palaa, kun haluat takaisin)\n").lower()
+                        if buildingInput == "palaa":
+                            building = False
+                        else:
+                            print(f"{game.build(buildingInput)}")
+                elif userInput == "palaa":
+                    menu = False
+                else:
+                    print("Väärä komento, kirjoita rakenna tai palaa.")
         elif command == "kulutus":
-            input(f"{game.getSpending()}\n{game.getConsumption()}\n(paina enter jatkaaksesi)")
+            input(f"{game.getSpending()}\n(paina enter jatkaaksesi)")
         elif command == "tilanne":
             input(f"Tilanne\n{game.getStatus()}\n(paina enter jatkaaksesi)")
         elif command == "seuraava":

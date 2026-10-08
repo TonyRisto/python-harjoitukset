@@ -1,5 +1,7 @@
 from setup_functions import getName, getAge, evaluateAge, mainMenu, loadGame, newGame
 
+## Ohjeet ja tervetuloa viesti haetaan erillisestä tekstitiedostosta.
+
 with open("instructions.txt", "r") as file:
     instructions = file.read()
 
@@ -8,6 +10,9 @@ with open("welcome.txt", "r") as file:
 
 name = getName()
 isOldEnough, age = evaluateAge(getAge())
+
+
+# Pelin alustus alkaa täältä.
 
 if not isOldEnough:
     print(f"Et ole tarpeeksi vanha, kokeile {12 - age} vuoden päästä uudestaan.")

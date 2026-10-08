@@ -1,11 +1,16 @@
 Sinut on valittu pienen kylän johtajaksi.
 
 TAVOITTEESI
-Kasvata kaupunki 250 asukkaaseen ja nosta kaikki
+Kasvata kylä 250 asukkaaseen ja nosta kaikki
 kestävyystavoitteet vähintään 70 %:iin 10 vuodessa.
 
-ENSIMMÄINEN VINKKI
+ENSIMMÄISET VINKIT
+Tarkkaile kulutustasi "kulutus" komennolla.
 Ympäristö heikkenee joka vuosi, ja väkiluku ei kasva ilman uusia
-taloja (asuntoihin ei mahdu enempää asukkaita). Rakenna viisaasti ja seuraa tilannetta.
+taloja (asuntoihin ei mahdu enempää asukkaita).
+Väkiluku kasvaa, kunhan onnellisuus on vähintään 50%
+Ruoan tuotanto on myös miinuksella, muista rakentaa maatiloja ajoissa
+korvaamaan kulutusta.
+Rakenna viisaasti ja seuraa tilannetta.
 
 Tässä ensimmäisen vuoden resurssit ja kestävyystavoitteiden tilanne:

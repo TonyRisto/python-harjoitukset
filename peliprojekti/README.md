@@ -1,23 +1,40 @@
-## Peli
+# Kylänkehityspeli
 
 # Tony Risto
 
-## Pelaajan nimi ja ikä kysytään.
+### Pelin idea
 
-## Pelaajan ikä tarkistetaan (onko alle 12-vuotias)
+Pelin ideana on kasvattaa ja kehittää kylää kestävän kehityksen periaatteiden mukaisesti. Pelissä on useita eri resursseja ja mittareita, joita pelaajan kannattaa seurata ahkerasti ja niiden avulla miettiä seuraavia valintojansa. Peli vaatii pelaajalta hieman mietiskelyä ja eri numeroiden seuraamista, jotta peli päättyisi pelaajan kannalta hyvin.
 
-## Valikko kysyy komentoa ja jokainen valinta antaa erin tulosteen ja kysyy uuden komennon jonka jälkeen palaa päävalikkoon.
+### Pelin tavoite
 
-## Lisätty uusia funktioita.
+Pelin tavoitteena on rakentaa kylä kestävän kehityksen tavoitteiden mukaisesti.
 
-## Pelin idea: Tavoitteena on kylän rakentaminen ja kehittäminen kestävän kehityksen periaatteiden mukaisesti.
+Voittomahdollisuudet:
+- Kestävä kylä voitto (vaatii 250 asukasta ja kaikki kestävyysmittarit vähintään 70 %)
+- Ekologinen voitto (vaatii uusiutuvan energian ja ympäristön mittarit vähintään 75 %)
+- Taloudellinen voitto (rahan määrä 1 100 000 €)
 
-## Pelissä on kolme eri lopputulosta. Lopputulokseen vaikuttaa matkan aikana tehdyt valinnat.
+Eri häviöt:
+- Kylän konkurssi (raha menee 0€)
+- Kylän autioituminen (asukkaat menee 0)
+- Kylän ympäristön tuhoutuminen ja asukkaiden onnettomuus (ympäristö ja onnellisuus menee 0)
+- Ajan loppuminen kesken ja useita eri häviömahdollisuuksia, riippuen kestävyysmittareiden tilanteesta
 
-## main.py tiedostossa ajetaan peliä (TODO)
+#### Toiminnallisuudet
+- pelaajan nimi ja ikärajatarkastus
+- uusi peli, ohjeet, jatka tallennettua peliä, lopeta
+- rakennusten katsominen ja niiden rakentaminen
+- tilanteen ja kulutuksen/tuoton tarkastelu
+- pelissä yhden vuoden eteenpäin siirtäminen
+- tallentaminen ja lataaminen
+- kolme voittoreittiä ja useita eri häviöitä
 
-## classes.py tiedostossa on pelin luokat
-
-## setup_functions.py tiedostossa on pelin aloittamiseen tarvittavat funktiot
-
-## texts.py tiedostossa on pelin käyttämät vakiot, pelissä käytettävien rakennusten sanakirja ja ohjeet
+#### Toimintaperiaatteet
+- Asukkaat tuovat tuloja, rakennuksista maksetaan ylläpitoa
+- ruoka ja energia kuluvat asukasluvun mukaan (vakiot asetettu näitä varten)
+- väkiluku kasvaa, kun on asuntoja ja ruokaa tarpeeksi sekä onnellisuus on tarpeeksi korkealla
+- energiapula laskee onnellisuutta ja tasa-arvoa
+- kestävyysmittarit laskevat joka vuosi vakioiden perusteella, rakennukset nostavat niitä
+- kestävyysmittarit pysyvät 0-100 välillä (edustavat prosenttimääriä)
+- advanceYear laskee kaiken yhdellä kertaa
