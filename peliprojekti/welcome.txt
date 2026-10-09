@@ -2,7 +2,7 @@ Sinut on valittu pienen kylän johtajaksi.
 
 TAVOITTEESI
 Kasvata kylä 250 asukkaaseen ja nosta kaikki
-kestävyystavoitteet vähintään 70 %:iin 10 vuodessa.
+kestävyystavoitteet vähintään 70 %:iin 15 vuodessa.
 
 ENSIMMÄISET VINKIT
 Tarkkaile kulutustasi "kulutus" komennolla.
